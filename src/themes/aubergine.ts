@@ -1,5 +1,8 @@
 import { IMapTypeStyle } from "../@types/index";
 
+// https://developers.google.com/maps/documentation/javascript/style-reference
+// https://snazzymaps.com/
+
 export const aubergine: IMapTypeStyle[] = [
   {
     elementType: "geometry",

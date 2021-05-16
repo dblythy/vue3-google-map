@@ -28,7 +28,7 @@
     "build:min": "node ./build/build commonjs esnext --min",
     "build:analyze": "node ./build/build esnext --analyze",
     "build:closure": "node ./build/build commonjs esnext --closure",
-    "docs:dev": "vitepress dev docs",
+    "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"
   },
@@ -47,6 +47,7 @@
     "@vue/eslint-config-typescript": "^7.0.0",
     "cross-env": "^7.0.2",
     "do-devops": "^0.7.0",
+    "dotenv": "^9.0.2",
     "eslint": "^7.24.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-prettier": "^3.4.0",
@@ -69,10 +70,13 @@
     "vue": "3"
   },
   "peerDependencies": {
-    "vue": "3",
-    "@googlemaps/js-api-loader": "^1.11.1"
+    "@googlemaps/js-api-loader": "^1.11.1",
+    "vue": "3"
   },
   "engines": {
     "node": ">=12"
+  },
+  "dependencies": {
+    "netlify-cli": "^3.29.15"
   }
 }

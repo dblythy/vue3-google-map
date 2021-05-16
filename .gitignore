@@ -2,6 +2,7 @@
 node_modules
 
 # local env files
+.env
 .env.local
 .env.*.local
 
@@ -20,3 +21,5 @@ yarn-error.log*
 
 # avoid having dist files in repo; these should only go to NPM
 dist
+# Local Netlify folder
+.netlify
