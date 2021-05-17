@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
+    "target": "esnext",
     "module": "esnext",
     "strict": true,
     "noUnusedLocals": true,
@@ -18,5 +18,5 @@
     },
     "lib": ["es2020", "dom", "dom.iterable", "scripthost"]
   },
-  "include": ["src", "docs"]
+  "include": ["src", "docs", "themes", "src/env.d, "docs/.vitepress/env.d.ts".ts"]
 }

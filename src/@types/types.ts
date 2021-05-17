@@ -1,4 +1,4 @@
-import * as themes from "../themes/index";
+import * as themes from "../../themes/index";
 import type { LoaderOptions } from "@googlemaps/js-api-loader";
 
 export type IGoogleMapsAPI = typeof google.maps;
