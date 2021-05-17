@@ -43,9 +43,7 @@ To use a default theme simply pass the theme's name to the `theme` prop of the `
 
 <!-- prettier-ignore -->
 ```vue
-<template>
-  <GoogleMap zoom="4" :theme="theme" />
-</template>
+<GoogleMap zoom="4" :theme="theme" />
 ```
 
 

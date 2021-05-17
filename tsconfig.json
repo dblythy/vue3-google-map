@@ -18,5 +18,5 @@
     },
     "lib": ["es2020", "dom", "dom.iterable", "scripthost"]
   },
-  "include": ["src", "docs", "themes", "src/env.d, "docs/.vitepress/env.d.ts".ts"]
+  "include": ["src", "docs", "themes", "src/env.d"]
 }
