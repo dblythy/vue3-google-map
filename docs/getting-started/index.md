@@ -1,8 +1,6 @@
 ---
 sidebar: auto
-next: "../options/"
 ---
-
 # Getting Started
 
 ## Functional Overview
@@ -41,7 +39,7 @@ export default defineComponent({
   components: { GoogleMap, Marker },
   setup() {
     /** make sure you provide your API key to the component **/
-    const apiKey = process.ENV.VUE_APP_API_KEY;
+    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
     /** center the marker in the middle of the map */
     const marker = { center: { lat: 40.689247, lng: -74.044502 }};
 
@@ -54,7 +52,7 @@ export default defineComponent({
 ### The Map
 
 <div style="width: 100%; height: 400px; margin-top: 1rem">
-   <GoogleMap :center="{ lat: 40.689247, lng: -74.044502 }" :zoom="15" theme="dark" api="">
+   <GoogleMap :center="{ lat: 40.689247, lng: -74.044502 }" :zoom="15" :api="api">
      <Marker :options="{ position: { lat: 40.689247, lng: -74.044502 } }" />
    </GoogleMap>
 </div>

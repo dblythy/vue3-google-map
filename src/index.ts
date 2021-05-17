@@ -1,19 +1,19 @@
-//#autoindex, exclude: shims-vue.d, composables, shared
+//#autoindex, exclude: shims-vue.d, composables, shared, themes, env.d
 
 // #region autoindexed files
 
-// index last changed at: 4th Apr, 2021, 05:18 AM ( GMT+2 )
-// export: named; exclusions: shims-vue.d, composables, shared, index, private.
-// directories: @types, components, themes.
+// index last changed at: 5th May, 2021, 03:32 PM ( GMT-7 )
+// export: named; exclusions: shims-vue.d, composables, shared, themes, env.d, index, private.
+// directories: @types, components, errors.
 
 // directory exports
 export * from "./@types/index";
 export * from "./components/index";
-export * from "./themes/index";
+export * from "./errors/index";
 
 // Note:
 // -----
-// This file was created by running: "do devops autoindex"; it assumes you have
+// This file was created by running: "dd devops autoindex"; it assumes you have
 // the 'do-devops' pkg installed as a dev dep.
 //
 // By default it assumes that exports are named exports but this can be changed by

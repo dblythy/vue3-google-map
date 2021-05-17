@@ -1,75 +1,38 @@
-import { InjectionKey, ref, Ref } from "vue";
-import { IGoogleMapsAPI, IMap } from "../@types/index";
-import type { Loader } from "@googlemaps/js-api-loader";
+// #autoindex
 
-export const apiSymbol: InjectionKey<Ref<IGoogleMapsAPI | null>> = Symbol("api");
-export const mapSymbol: InjectionKey<Ref<IMap | null>> = Symbol("map");
-export const loaderInstance = ref<Loader | null>(null);
+// #region autoindexed files
 
-export const mapEvents = [
-  "bounds_changed",
-  "center_changed",
-  "click",
-  "dblclick",
-  "drag",
-  "dragend",
-  "dragstart",
-  "heading_changed",
-  "idle",
-  "maptypeid_changed",
-  "mousemove",
-  "mouseout",
-  "mouseover",
-  "projection_changed",
-  "resize",
-  "rightclick",
-  "tilesloaded",
-  "tilt_changed",
-  "zoom_changed",
-];
+// index last changed at: 5th May, 2021, 02:00 PM ( GMT-7 )
+// export: named; exclusions: index, private.
+// files: constants.
 
-export const markerEvents = [
-  "animation_changed",
-  "click",
-  "dblclick",
-  "rightclick",
-  "dragstart",
-  "dragend",
-  "drag",
-  "mouseover",
-  "mousedown",
-  "mouseout",
-  "mouseup",
-  "draggable_changed",
-  "clickable_changed",
-  "contextmenu",
-  "cursor_changed",
-  "flat_changed",
-  "rightclick",
-  "zindex_changed",
-  "icon_changed",
-  "position_changed",
-  "shape_changed",
-  "title_changed",
-  "visible_changed",
-];
+// local file exports
+export * from "./constants";
 
-export const polylineEvents = [
-  "click",
-  "dblclick",
-  "drag",
-  "dragend",
-  "dragstart",
-  "mousedown",
-  "mousemove",
-  "mouseout",
-  "mouseover",
-  "mouseup",
-  "rightclick",
-];
+// Note:
+// -----
+// This file was created by running: "dd devops autoindex"; it assumes you have
+// the 'do-devops' pkg installed as a dev dep.
+//
+// By default it assumes that exports are named exports but this can be changed by
+// adding a modifier to the '// #autoindex' syntax:
+//
+//    - autoindex:named     same as default, exports "named symbols"
+//    - autoindex:default   assumes each file is exporting a default export
+//                          and converts the default export to the name of the
+//                          file
+//    - autoindex:offset    assumes files export "named symbols" but that each
+//                          file's symbols should be offset by the file's name
+//                          (useful for files which might symbols which collide
+//                          or where the namespacing helps consumers)
+//
+// You may also exclude certain files or directories by adding it to the
+// autoindex command. As an example:
+//
+//    - autoindex:named, exclude: foo,bar,baz
+//
+// Also be aware that all of your content outside the defined region in this file
+// will be preserved in situations where you need to do something paricularly awesome.
+// Keep on being awesome.
 
-export const polygonEvents = polylineEvents;
-
-export const rectangleEvents = polylineEvents.concat(["bounds_changed"]);
-
-export const circleEvents = polylineEvents.concat(["center_changed", "radius_changed"]);
+// #endregion

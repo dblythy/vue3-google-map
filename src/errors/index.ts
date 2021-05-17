@@ -2,13 +2,13 @@
 
 // #region autoindexed files
 
-// index last changed at: 5th May, 2021, 02:37 PM ( GMT-7 )
+// index last changed at: 5th May, 2021, 04:11 PM ( GMT-7 )
 // export: named; exclusions: index, private.
-// files: type-guards, types.
+// files: ApiError, MapError.
 
 // local file exports
-export * from "./type-guards";
-export * from "./types";
+export * from "./ApiError";
+export * from "./MapError";
 
 // Note:
 // -----

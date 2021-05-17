@@ -1,7 +1,7 @@
 import { defineComponent, PropType, toRef } from "vue";
 import { useSetupMapComponent } from "../composables/index";
 import { IPolygonOptions } from "../@types/index";
-import { polygonEvents } from "../shared/index";
+import { POLYGON_EVENTS } from "../shared/index";
 
 export default defineComponent({
   props: {
@@ -10,10 +10,10 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: polygonEvents,
+  emits: POLYGON_EVENTS,
   setup(props, { emit }) {
     const options = toRef(props, "options");
-    const polygon = useSetupMapComponent("Polygon", polygonEvents, options, emit);
+    const polygon = useSetupMapComponent("Polygon", POLYGON_EVENTS, options, emit);
 
     return { polygon };
   },

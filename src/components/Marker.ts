@@ -1,7 +1,7 @@
 import { defineComponent, PropType, Ref, toRef } from "vue";
 import { IComponentOptions, useSetupMapComponent } from "../composables/index";
 import { IMarkerOptions } from "../@types/index";
-import { markerEvents } from "../shared/index";
+import { MARKER_EVENTS } from "../shared/index";
 
 export default defineComponent({
   props: {
@@ -10,10 +10,10 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: markerEvents,
+  emits: MARKER_EVENTS,
   setup(props, { emit }) {
     const options = toRef(props, "options") as Ref<IComponentOptions>;
-    const marker = useSetupMapComponent("Marker", markerEvents, options, emit);
+    const marker = useSetupMapComponent("Marker", MARKER_EVENTS, options, emit);
 
     return { marker };
   },

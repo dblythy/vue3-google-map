@@ -101,7 +101,7 @@ const moduleConfig = (moduleSystem, file, emitDeclaration) => {
     }
     const tsconfigOverride = {
       compilerOptions: {
-        ...(emitDeclaration ? { declaration: emitDeclaration, declarationDir } : {}),
+        ...(emitDeclaration ? { declaration: emitDeclaration, declarationDir, sourceMap: false } : {}),
         outDir,
         module: "esnext",
       },

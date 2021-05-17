@@ -1,5 +1,5 @@
 const path = require("path");
-
+console.log(process.env.VITE_GOOGLE_API_KEY);
 module.exports = {
   title: "vue3-google-map",
   description: "vue3-google-map documentation",
@@ -10,8 +10,8 @@ module.exports = {
         link: "/getting-started/",
       },
       {
-        text: "Options",
-        link: "/options/",
+        text: "Config",
+        link: "/config/",
       },
       {
         text: "Components",

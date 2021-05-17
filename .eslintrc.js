@@ -14,11 +14,11 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
+    quotes: ["warn", "double", { avoidEscape: true, allowTemplateLiterals: true }],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/no-var-requires": "off",
     "brace-style": ["error", "1tbs", { allowSingleLine: true }],
-    quotes: ["warn", "double"],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

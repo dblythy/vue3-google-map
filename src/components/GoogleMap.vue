@@ -1,16 +1,30 @@
 <template>
   <div class="map-container" :style="wrapperStyle">
-    <div v-bind="$attrs" ref="mapRef" class="map" style="width: 100%; height: 100%" />
+    <div v-bind="$attrs" ref="mapElement" class="map" style="width: 100%; height: 100%" />
     <slot />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, onMounted, onBeforeUnmount, watch, provide, computed, reactive } from "vue";
-import { Loader, LoaderOptions } from "@googlemaps/js-api-loader";
-import { IGoogleMapsAPI, IMap, IMapOptions, AspectRatio, Api, MapTheme, IMapTypeStyle } from "../@types/index";
-import { mapSymbol, apiSymbol, loaderInstance, mapEvents } from "../shared/index";
-import * as themes from "../themes";
+/* eslint-disable no-undef */
+import {
+  defineComponent,
+  PropType,
+  ref,
+  onMounted,
+  onBeforeUnmount,
+  watch,
+  provide,
+  computed,
+  reactive,
+  Ref,
+} from "vue";
+import { LoaderOptions } from "@googlemaps/js-api-loader";
+import { IGoogleMapsAPI, IMap, IMapOptions, AspectRatio, Api, MapTheme, ZoomLevel } from "../@types/index";
+import { MAP_SYMBOL, API_SYMBOL, MAP_EVENTS } from "../shared/index";
+import { loadApi } from "./GoogleMap/loadApi";
+import { MapError } from "../errors";
+import { loadTheme } from "./GoogleMap/loadTheme";
 
 function computeHeight(w: string | undefined, ratio: AspectRatio) {
   if (ratio) {
@@ -21,8 +35,9 @@ function computeHeight(w: string | undefined, ratio: AspectRatio) {
       const height = width * r;
       return `${height}px`;
     } else {
-      throw new Error(
-        "Currently you can only use aspect ratio when you explicitly set the width in pixels. This may be improved in the future. "
+      throw new MapError(
+        "Currently you can only use aspect ratio when you explicitly set the width in pixels. This may be improved in the future. ",
+        "aspect-ratio/feature-incomplete"
       );
     }
   }
@@ -59,7 +74,7 @@ export default defineComponent({
       type: [String, Object] as PropType<Api>,
       default: "",
     },
-    options: {
+    config: {
       type: Object as PropType<Partial<IMapOptions>>,
       required: false,
       default: undefined,
@@ -72,7 +87,7 @@ export default defineComponent({
     },
 
     zoom: {
-      type: Number,
+      type: [Number, String] as PropType<ZoomLevel>,
       default: 15,
     },
 
@@ -83,7 +98,7 @@ export default defineComponent({
     },
 
     theme: {
-      type: String as PropType<MapTheme>,
+      type: [String, Array] as PropType<MapTheme>,
       required: false,
       default: undefined,
     },
@@ -118,85 +133,89 @@ export default defineComponent({
     // zoomControl: { type: Boolean, default: undefined },
     // zoomControlPosition: String as PropType<IControlPosition>,
   },
-  emits: mapEvents,
+  emits: MAP_EVENTS,
   setup(props, { emit }) {
-    const mapRef = ref<HTMLElement | null>(null);
+    const mapElement = ref<HTMLElement | null>(null);
     const ready = ref(false);
     const map = ref<IMap | null>(null);
-    const apiRef = ref<IGoogleMapsAPI | null>(null);
+    const googleApi = ref<IGoogleMapsAPI | null>(null);
+    /**
+     * Assemble the Google API's configuration; leveraging
+     * passed in explicit values as well as ENV variables
+     * if available.
+     */
+    const apiConfig: LoaderOptions =
+      typeof props.api === "string"
+        ? {
+            apiKey: props.api || import.meta.env.VITE_GOOGLE_API_KEY,
+            libraries: [import.meta.env.VITE_GOOGLE_LIBRARIES || "places"],
+          }
+        : props.api
+        ? props.api
+        : { apiKey: import.meta.env.VITE_GOOGLE_API_KEY || "" };
 
-    const options: IMapOptions = reactive({
-      ...(props.options ? props.options : {}),
-      ...(props.theme ? { styles: themes[props.theme as keyof typeof themes] } : {}),
-      ...(props.zoom ? { zoom: props.zoom } : {}),
+    /**
+     * The map config is reactive object which defines all the properties
+     * allowed on Google's Map API
+     */
+    const mapConfig: IMapOptions = reactive({
+      ...(props.config ? props.config : {}),
+      ...(props.zoom ? { zoom: Number(props.zoom) } : {}),
       ...(props.tilt ? { tilt: props.tilt } : {}),
       ...(props.center ? { center: props.center } : {}),
     });
 
-    provide(mapSymbol, map);
-    provide(apiSymbol, apiRef);
+    provide(MAP_SYMBOL, map);
+    provide(API_SYMBOL, googleApi);
 
     onBeforeUnmount(() => {
       if (map.value) {
-        apiRef.value?.event.clearInstanceListeners(map.value);
+        googleApi.value?.event.clearInstanceListeners(map.value);
       }
     });
 
     onMounted(async () => {
-      try {
-        const apiConfig: LoaderOptions =
-          typeof props.api === "string"
-            ? { apiKey: props.api, libraries: ["places"] }
-            : props.api
-            ? props.api
-            : { apiKey: "" };
-
-        loaderInstance.value = new Loader(apiConfig);
-      } catch (err) {
-        // Loader instantiated again with different options, which isn't allowed by js-api-loader
-        console.error(err);
-      } finally {
-        (loaderInstance.value as Loader).load().then(() => {
-          // eslint-disable-next-line no-undef
-          const { Map } = (apiRef.value = google.maps);
-          map.value = new Map(mapRef.value as HTMLElement, options);
-
-          mapEvents.forEach((event) => {
-            map.value?.addListener(event, (e: unknown) => emit(event, e));
-          });
-
-          ready.value = true;
-
-          // const otherPropsAsRefs = (Object.keys(props) as (keyof typeof props)[])
-          //   .filter((key) => !["center", "zoom"].includes(key))
-          //   .map((key) => toRef(props, key));
-
-          watch(
-            [() => props.center, () => props.zoom, () => props.theme] as const,
-            ([center, zoom, theme], [oldCenter, oldZoom, oldTheme]) => {
-              if (zoom !== undefined && zoom !== oldZoom) {
-                map.value?.setZoom(zoom);
-              }
-
-              if (oldTheme !== theme && apiRef.value && map.value) {
-                console.log("restyling");
-
-                const styles = themes[theme as keyof typeof themes] as IMapTypeStyle[];
-                // map.value.mapTypes.set(theme, new apiRef.value.StyledMapType(themes[theme as keyof typeof themes]));
-                // map.value.setMapTypeId(theme);
-                options.styles = styles;
-                map.value.setOptions({ styles });
-              }
-
-              if (center && map.value) {
-                if (!oldCenter || center.lng !== oldCenter.lng || center.lat !== oldCenter.lat) {
-                  map.value.panTo(center);
-                }
-              }
-            }
-          );
-        });
+      if (window.google && window.google.maps.Map) {
+        if (import.meta.env.DEV) {
+          console.info("found google API, reusing established connection");
+        }
+        /** get reference to existing Map API */
+        map.value = new google.maps.Map(mapElement.value as HTMLElement, mapConfig);
+      } else {
+        /** establish new instance of Map API */
+        map.value = await loadApi(apiConfig, mapElement as Ref<HTMLElement>, mapConfig);
       }
+      if (props.theme) {
+        loadTheme(props.theme, map as Ref<IMap>);
+      }
+
+      MAP_EVENTS.forEach((event) => {
+        // TODO: investigate this depracation
+        map.value?.addListener(event, (e: unknown) => emit(event, e));
+      });
+      ready.value = true;
+      watch(
+        [() => props.center, () => props.zoom, () => props.theme, () => props.tilt] as const,
+        ([center, zoom, theme, tilt], [oldCenter, oldZoom, oldTheme, oldTilt]) => {
+          if (zoom !== undefined && zoom !== oldZoom) {
+            map.value?.setZoom(zoom);
+          }
+
+          if (oldTheme !== theme && googleApi.value && map.value) {
+            loadTheme(theme, map as Ref<IMap>);
+          }
+
+          if (center && map.value) {
+            if (!oldCenter || center.lng !== oldCenter.lng || center.lat !== oldCenter.lat) {
+              map.value.panTo(center);
+            }
+          }
+
+          if (map.value && tilt && tilt !== oldTilt) {
+            map.value.setTilt(tilt);
+          }
+        }
+      );
     });
 
     const width = computed(() => {
@@ -217,7 +236,7 @@ export default defineComponent({
         : `width: ${width.value}; height: ${height.value}; min-height: ${minHeight.value}`;
     });
 
-    return { mapRef, ready, map, apiRef, wrapperStyle, config: options };
+    return { mapElement, ready, map, googleApi, wrapperStyle, mapConfig };
   },
 });
 </script>

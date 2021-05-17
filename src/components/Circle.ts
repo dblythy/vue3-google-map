@@ -1,7 +1,7 @@
 import { defineComponent, PropType, toRef } from "vue";
 import { useSetupMapComponent } from "../composables/index";
 import { ICircleOptions } from "../@types/index";
-import { circleEvents } from "../shared/index";
+import { CIRCLE_EVENTS } from "../shared/index";
 
 export default defineComponent({
   props: {
@@ -10,10 +10,10 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: circleEvents,
+  emits: CIRCLE_EVENTS,
   setup(props, { emit }) {
     const options = toRef(props, "options");
-    const circle = useSetupMapComponent("Circle", circleEvents, options, emit);
+    const circle = useSetupMapComponent("Circle", CIRCLE_EVENTS, options, emit);
 
     return { circle };
   },

@@ -14,7 +14,8 @@
   "module": "dist/es/index.js",
   "typings": "dist/types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "themes"
   ],
   "scripts": {
     "dev": "vite",
@@ -35,9 +36,9 @@
   "devDependencies": {
     "@ampproject/rollup-plugin-closure-compiler": "^0.26.0",
     "@googlemaps/js-api-loader": "^1.11.1",
-    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@rollup/plugin-node-resolve": "^13.0.0",
     "@types/google-maps": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
@@ -46,7 +47,8 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "cross-env": "^7.0.2",
-    "do-devops": "^0.7.0",
+    "dd": "^0.11.3",
+    "destr": "^1.1.0",
     "dotenv": "^9.0.2",
     "eslint": "^7.24.0",
     "eslint-config-prettier": "^8.2.0",
@@ -65,18 +67,21 @@
     "ttypescript": "^1.5.12",
     "typescript": "~4.2.4",
     "typescript-transform-paths": "^2.2.3",
-    "vite": "^2.2.1",
+    "vite": "^2.3.2",
     "vitepress": "^0.13.0",
     "vue": "3"
   },
   "peerDependencies": {
     "@googlemaps/js-api-loader": "^1.11.1",
+    "destr": "^1.1.0",
     "vue": "3"
   },
   "engines": {
     "node": ">=12"
   },
   "dependencies": {
+    "@rollup/plugin-dynamic-import-vars": "^1.1.1",
+    "brilliant-errors": "^0.3.0",
     "netlify-cli": "^3.29.15"
   }
 }

@@ -11,7 +11,7 @@ import {
   IRectangleOptions,
   ICircleOptions,
 } from "../@types/index";
-import { apiSymbol, mapSymbol } from "../shared/index";
+import { API_SYMBOL, MAP_SYMBOL } from "../shared/index";
 
 export type IComponent = IMarker | IPolyline | IPolygon | IRectangle | ICircle;
 export type IComponentOptions =
@@ -30,8 +30,8 @@ export const useSetupMapComponent = (
   let _component: IComponent | null = null;
   const component = ref<IComponent | null>(null);
 
-  const map = inject(mapSymbol, ref(null));
-  const api = inject(apiSymbol, ref(null));
+  const map = inject(MAP_SYMBOL, ref(null));
+  const api = inject(API_SYMBOL, ref(null));
 
   watch(
     [map, options],

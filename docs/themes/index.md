@@ -4,9 +4,31 @@ sidebar: auto
 
 # Themes
 
-`vue3-google-map` comse with a curated set of default themes for you to use. You can also define custom styles utilizing the Google Maps API.
+## Introduction
 
-## Default Themes
+Google's Map API provides the means to configure your map to look the way _you_ want it to look. This includes changing colors, determining what details should be displayed what should not, and much more. Below are links for the official docs as well as a cool (and free) site to help you design your own customizations:
+
+- [Google API Docs for Map Customization](https://developers.google.com/maps/documentation/javascript/styling)
+- [Snazzy Maps](https://snazzymaps.com/)
+
+The way that the API provides for you to add in your _styling_ is to drop in your styling to the "styles" property on the configuration hash. You can certainly do this, and it would look something like this:
+
+```html
+<GoogleMap :config=" { styles: [ YOUR STYLES HERE ] }">
+```
+> Note: the styles are _typed_ as an array of `IMapTypeStyle` objects; this interface is available from this repo (but is just a proxy of the official typings)
+
+Because adjusting the look and feel is such an important thing for most websites, however, we've added a root level property to help you with this called `theme`. The `theme` variable offers you both a set of _pre-configured_ styles and an async way to load your own.
+
+> Note: to keep bundle size low, you don't want to just load a ton of different styles right away but rather it's better to just use this _async_ API to load in what you need when you need it.
+
+In the remainder of this section we'll cover the pre-configured options along with how you can use your own.
+
+## Using Themes
+
+### Preconfigured Themes
+
+<ThemesExample />
 
 To use a default theme simply pass the theme's name to the `theme` prop of the `GoogleMap` component. The available themes are:
 
@@ -22,41 +44,10 @@ To use a default theme simply pass the theme's name to the `theme` prop of the `
 <!-- prettier-ignore -->
 ```vue
 <template>
-  <GoogleMap api-key="YOUR_GOOGLE_MAPS_API_KEY" :center="center" :zoom="4" :styles="theme" />
-  <label for="theme">Theme</label>
-  <select v-model="theme" id="theme">
-    <option value="">-- None --</option>
-    <option v-for="theme in themes" :value="theme" :key="theme">{{ theme }}</option>
-  </select>
+  <GoogleMap zoom="4" :theme="theme" />
 </template>
-
-<script>
-import { defineComponent, ref } from 'vue'
-import { GoogleMap } from 'vue3-google-map'
-
-export default defineComponent({
-  components: { GoogleMap },
-  setup() {
-    const center = { lat: 39.50024, lng: -98.350891 }
-    const themes = ['aubergine', 'dark', 'grey', 'minimal', 'retro', 'roadways', 'roadwaysMinimal', 'ultraLight']
-    const theme = ref('')
-
-    return { center, themes, theme }
-  },
-})
-</script>
-
-<style scoped>
-select {
-  width: 200px;
-  margin-top: 20px;
-  margin-left: 10px;
-}
-</style>
 ```
 
-\
-<ThemesExample style="width: 100%; height: 500px" />
 
 ## Custom Styles
 

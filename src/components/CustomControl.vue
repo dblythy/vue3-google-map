@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, watch, ref, inject } from "vue";
-import { apiSymbol, mapSymbol } from "../shared/index";
+import { API_SYMBOL, MAP_SYMBOL } from "../shared/index";
 import { IControlPosition } from "../@types/index";
 
 export default defineComponent({
@@ -27,8 +27,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const controlRef = ref<HTMLElement | null>(null);
 
-    const map = inject(mapSymbol, ref(null));
-    const api = inject(apiSymbol, ref(null));
+    const map = inject(MAP_SYMBOL, ref(null));
+    const api = inject(API_SYMBOL, ref(null));
 
     const showContent = ref(false);
 

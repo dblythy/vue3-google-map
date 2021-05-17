@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2019",
-    "module": "commonjs",
+    "module": "esnext",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -10,13 +10,13 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
       "/@src/*": ["src/*"]
     },
-    "lib": ["dom", "dom.iterable", "scripthost"]
+    "lib": ["es2020", "dom", "dom.iterable", "scripthost"]
   },
   "include": ["src", "docs"]
 }

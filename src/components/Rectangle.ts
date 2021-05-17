@@ -1,7 +1,7 @@
 import { defineComponent, PropType, toRef } from "vue";
 import { useSetupMapComponent } from "../composables/index";
 import { IRectangleOptions } from "../@types/index";
-import { rectangleEvents } from "../shared/index";
+import { RECTANGLE_EVENTS } from "../shared/index";
 
 export default defineComponent({
   props: {
@@ -10,10 +10,10 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: rectangleEvents,
+  emits: RECTANGLE_EVENTS,
   setup(props, { emit }) {
     const options = toRef(props, "options");
-    const rectangle = useSetupMapComponent("Rectangle", rectangleEvents, options, emit);
+    const rectangle = useSetupMapComponent("Rectangle", RECTANGLE_EVENTS, options, emit);
 
     return { rectangle };
   },
