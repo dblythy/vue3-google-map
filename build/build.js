@@ -1,9 +1,4 @@
-/* eslint-disable unicorn/no-process-exit */
-/* eslint-disable unicorn/import-style */
-/* eslint-disable unicorn/prefer-module */
-
 // @ts-nocheck
-/* eslint-disable import/order */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const rollup = require("rollup");
 const commonjs = require("@rollup/plugin-commonjs");

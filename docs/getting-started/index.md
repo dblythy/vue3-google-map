@@ -76,7 +76,7 @@ Below you will see how this code translates into an actual map but let's review 
 
     > This example -- like many examples added to the "getting started" section of documentation -- is intended to be easy to digest rather than show the full power of the feature. In fact, if you hadn't stated that option, the centered position would have actually been the default. But importantly, every component in this library exposes an `options` hash which provides a way to reach into that component and utilize the rather expansive set of options that Google provides.
 
-    > We will cover the use of options in the next section, entitled ... you guessed it ... the [Option](../options/) section.
+    > We will cover the use of options in the next section, entitled ... you guessed it ... the [Option](../config/) section.
   
 4. In the template section you'll see that we wrapped the map in a **div** with explicit _height_ and _width_. 
 
