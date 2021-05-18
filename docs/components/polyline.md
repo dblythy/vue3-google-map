@@ -28,8 +28,8 @@ You can pass a [PolylineOptions](https://developers.google.com/maps/documentatio
 ```vue
 <template>
   <GoogleMap
-  api-key="YOUR_GOOGLE_MAPS_API_KEY"
-  style="width: 100%; height: 500px"
+  width: "100%"
+  height: "500px"
   :center="center"
   :zoom="3"
   >
@@ -66,8 +66,8 @@ export default defineComponent({
 ```
 
 \
-<GoogleMap style="width: 100%; height: 500px" :center="{ lat: 0, lng: -180 }" :zoom="3">
-<Polyline :options="$page.frontmatter.flightPath" />
+<GoogleMap width="100%" height= "500px" :center="{ lat: 0, lng: -180 }" :zoom="3">
+  <Polyline :options="$page.frontmatter.flightPath" />
 </GoogleMap>
 
 ## Events

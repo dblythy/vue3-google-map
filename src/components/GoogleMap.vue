@@ -1,6 +1,6 @@
 <template>
-  <div class="map-container" :style="wrapperStyle">
-    <div v-bind="$attrs" ref="mapElement" class="map" style="width: 100%; height: 100%" />
+  <div class="map-container" :style="wrapperStyle" v-bind="$attrs">
+    <div ref="mapElement" class="map" style="width: 100%; height: 100%" />
     <slot />
   </div>
 </template>
@@ -66,16 +66,12 @@ export default defineComponent({
       default: undefined,
       required: false,
     },
-    style: {
-      type: String,
-      default: undefined,
-      required: false,
-    },
+
     api: {
       type: [String, Object] as PropType<Api>,
       default: "",
     },
-    config: {
+    options: {
       type: Object as PropType<Partial<IMapOptions>>,
       required: false,
       default: undefined,
@@ -135,7 +131,7 @@ export default defineComponent({
     // zoomControlPosition: String as PropType<IControlPosition>,
   },
   emits: MAP_EVENTS,
-  setup(props, { emit }) {
+  setup(props, { emit, attrs }) {
     const mapElement = ref<HTMLElement | null>(null);
     const ready = ref(false);
     const map = ref<IMap | null>(null);
@@ -161,8 +157,8 @@ export default defineComponent({
      * The map config is reactive object which defines all the properties
      * allowed on Google's Map API
      */
-    const mapConfig: IMapOptions = reactive({
-      ...(props.config ? props.config : {}),
+    const mapOptions: IMapOptions = reactive({
+      ...(props.options ? props.options : {}),
       ...(props.zoom ? { zoom: Number(props.zoom) } : {}),
       ...(props.tilt ? { tilt: props.tilt } : {}),
       ...(props.center ? { center: props.center } : {}),
@@ -183,10 +179,10 @@ export default defineComponent({
           console.info("found google API, reusing established connection");
         }
         /** get reference to existing Map API */
-        map.value = new google.maps.Map(mapElement.value as HTMLElement, mapConfig);
+        map.value = new google.maps.Map(mapElement.value as HTMLElement, mapOptions);
       } else {
         /** establish new instance of Map API */
-        map.value = await loadApi(apiConfig, mapElement as Ref<HTMLElement>, mapConfig);
+        map.value = await loadApi(apiConfig, mapElement as Ref<HTMLElement>, mapOptions);
       }
       if (props.theme) {
         loadTheme(props.theme, map as Ref<IMap>);
@@ -198,8 +194,8 @@ export default defineComponent({
       });
       ready.value = true;
       watch(
-        [() => props.center, () => props.zoom, () => props.theme, () => props.tilt, () => props.config] as const,
-        ([center, zoom, theme, tilt, config], [oldCenter, oldZoom, oldTheme, oldTilt, oldConfig]) => {
+        [() => props.center, () => props.zoom, () => props.theme, () => props.tilt, () => props.options] as const,
+        ([center, zoom, theme, tilt, options], [oldCenter, oldZoom, oldTheme, oldTilt, oldOptions]) => {
           if (map.value && zoom !== undefined && zoom !== oldZoom) {
             map.value.setZoom(Number(zoom));
           }
@@ -218,11 +214,11 @@ export default defineComponent({
             map.value.setTilt(tilt);
           }
 
-          if (map.value && config !== oldConfig) {
+          if (map.value && options !== oldOptions) {
             if (getEnv().DEV) {
               console.log("Map config has changed");
             }
-            map.value.setOptions(config);
+            map.value.setOptions(options);
           }
         }
       );
@@ -240,13 +236,13 @@ export default defineComponent({
       return props.minHeight ? props.minHeight : "100px";
     });
 
-    const wrapperStyle = computed(() => {
-      return props.style
-        ? props.style
+    const wrapperStyle = computed<string>(() => {
+      return attrs.style
+        ? (attrs.style as string)
         : `width: ${width.value}; height: ${height.value}; min-height: ${minHeight.value}`;
     });
 
-    return { mapElement, ready, map, googleApi, wrapperStyle, mapConfig };
+    return { mapElement, ready, map, googleApi, wrapperStyle, mapOptions };
   },
 });
 </script>

@@ -1,16 +1,10 @@
 //#autoindex, exclude: shims-vue.d, composables, shared, themes, env.d
 
-import "./env";
-
 // #region autoindexed files
 
-// index last changed at: 5th May, 2021, 06:02 PM ( GMT-7 )
+// index last changed at: 5th May, 2021, 09:13 PM ( GMT-7 )
 // export: named; exclusions: shims-vue.d, composables, shared, themes, env.d, index, private.
-// files: env.
 // directories: @types, components, errors.
-
-// local file exports
-export * from "./env";
 
 // directory exports
 export * from "./@types/index";

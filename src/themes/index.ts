@@ -1,24 +1,20 @@
-// #autoindex:default
+// #autoindex
 
 // #region autoindexed files
 
-// index last changed at: 5th May, 2021, 06:42 PM ( GMT-7 )
-// export: default; exclusions: index, private.
-// files: Circle, Marker, Polygon, Polyline, Rectangle.
-// SFCs: CustomControl, GoogleMap.
+// index last changed at: 5th May, 2021, 09:05 PM ( GMT-7 )
+// export: named; exclusions: index, private.
+// files: aubergine, dark, grey, minimal, retro, roadways, roadwaysMinimal, ultraLight.
 
 // local file exports
-export { default as Circle } from "./Circle";
-export { default as Marker } from "./Marker";
-export { default as Polygon } from "./Polygon";
-export { default as Polyline } from "./Polyline";
-export { default as Rectangle } from "./Rectangle";
-
-// SFC components
-export { default as CustomControl } from "./CustomControl.vue";
-export { default as GoogleMap } from "./GoogleMap.vue";
-
-// there were directories orphaned: GoogleMap
+export * from "./aubergine";
+export * from "./dark";
+export * from "./grey";
+export * from "./minimal";
+export * from "./retro";
+export * from "./roadways";
+export * from "./roadwaysMinimal";
+export * from "./ultraLight";
 
 // Note:
 // -----
