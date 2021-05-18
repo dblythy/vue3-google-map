@@ -94,7 +94,7 @@ In the previous `config` example we showed how you can state the `zoom` property
 Doing this doesn't in any way prevent you from later doing it as part of the config object but the core API will always take precedence over the general config hash. Now are the two `zoom` configurations exactly the same? Very close but with the core API we allow you to state both a _number_ (which is what `config.zoom` is typed to) or a string representation of a number. Small change but it makes for using a static value like the example above that much easier.
 
 #### Example #2: Themes
-In the `config` parameter you can set a property called `styles` and this will effect the way that your map is displayed. From a _typing_ standpoint this property is an array of `IMapTypeStyle` elements. You can therefore style your map with just this **config.styles** setting but we expose a core property called `theme` which is covered in greater detail in the [themes](./themes/) section but in short it allows for you to more compactly style your map with either built-in styles or your own:
+In the `config` parameter you can set a property called `styles` and this will effect the way that your map is displayed. From a _typing_ standpoint this property is an array of `IMapTypeStyle` elements. You can therefore style your map with just this **config.styles** setting but we expose a core property called `theme` which is covered in greater detail in the [themes](../themes/index.md) section but in short it allows for you to more compactly style your map with either built-in styles or your own:
 
 ```html
 <!-- using a built-in style -->

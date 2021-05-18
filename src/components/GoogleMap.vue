@@ -21,7 +21,7 @@ import {
 } from "vue";
 import { LoaderOptions } from "@googlemaps/js-api-loader";
 import { IGoogleMapsAPI, IMap, IMapOptions, AspectRatio, Api, MapTheme, ZoomLevel } from "../@types/index";
-import { MAP_SYMBOL, API_SYMBOL, MAP_EVENTS } from "../shared/index";
+import { MAP_SYMBOL, API_SYMBOL, MAP_EVENTS, getEnv } from "../shared/index";
 import { loadApi } from "./GoogleMap/loadApi";
 import { MapError } from "../errors";
 import { loadTheme } from "./GoogleMap/loadTheme";
@@ -179,7 +179,7 @@ export default defineComponent({
 
     onMounted(async () => {
       if (window.google && window.google.maps.Map) {
-        if (import.meta.env.DEV) {
+        if (getEnv().DEV) {
           console.info("found google API, reusing established connection");
         }
         /** get reference to existing Map API */
@@ -200,8 +200,8 @@ export default defineComponent({
       watch(
         [() => props.center, () => props.zoom, () => props.theme, () => props.tilt, () => props.config] as const,
         ([center, zoom, theme, tilt, config], [oldCenter, oldZoom, oldTheme, oldTilt, oldConfig]) => {
-          if (zoom !== undefined && zoom !== oldZoom) {
-            map.value?.setZoom(zoom);
+          if (map.value && zoom !== undefined && zoom !== oldZoom) {
+            map.value.setZoom(Number(zoom));
           }
 
           if (oldTheme !== theme && googleApi.value && map.value) {
@@ -219,7 +219,7 @@ export default defineComponent({
           }
 
           if (map.value && config !== oldConfig) {
-            if (import.meta.env.DEV) {
+            if (getEnv().DEV) {
               console.log("Map config has changed");
             }
             map.value.setOptions(config);

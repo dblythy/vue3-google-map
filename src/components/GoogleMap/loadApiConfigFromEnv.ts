@@ -1,12 +1,12 @@
 import { LoaderOptions } from "@googlemaps/js-api-loader";
 import { IEnvConfig } from "/@src/@types";
-import { ImportMeta } from "/@src/env";
+import { getEnv } from "/@src/shared/getEnv";
 
 /**
  * looks in ENV variables for API configuration defaults
  */
 export function loadApiConfigFromEnv(): IEnvConfig {
-  const env: ImportMeta["env"] = (import.meta as unknown as ImportMeta).env;
+  const env = getEnv();
   return {
     apiKey: env.VITE_MAP_API_KEY || env.VUE_APP_MAP_API_KEY || "",
     libraries: (env.VITE_MAP_LIBRARIES || env.VUE_APP_MAP_LIBRARIES || "places").split(

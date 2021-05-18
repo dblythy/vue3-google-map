@@ -1,4 +1,4 @@
-export interface ImportMeta {
+export interface ImportMyMeta {
   env: {
     VITE_MAP_API_KEY: string;
     VUE_APP_MAP_API_KEY: string;

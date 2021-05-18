@@ -2,12 +2,13 @@
 
 // #region autoindexed files
 
-// index last changed at: 5th May, 2021, 02:00 PM ( GMT-7 )
+// index last changed at: 5th May, 2021, 06:00 PM ( GMT-7 )
 // export: named; exclusions: index, private.
-// files: constants.
+// files: constants, getEnv.
 
 // local file exports
 export * from "./constants";
+export * from "./getEnv";
 
 // Note:
 // -----
