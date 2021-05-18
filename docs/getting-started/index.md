@@ -52,7 +52,7 @@ export default defineComponent({
 ### The Map
 
 <div style="width: 100%; height: 400px; margin-top: 1rem">
-   <GoogleMap :center="{ lat: 40.689247, lng: -74.044502 }" :zoom="15" :api="api">
+   <GoogleMap :center="{ lat: 40.689247, lng: -74.044502 }" :zoom="15" >
      <Marker :options="{ position: { lat: 40.689247, lng: -74.044502 } }" />
    </GoogleMap>
 </div>

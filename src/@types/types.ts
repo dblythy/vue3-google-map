@@ -1,4 +1,3 @@
-import * as themes from "../../themes/index";
 import type { LoaderOptions } from "@googlemaps/js-api-loader";
 
 export type IGoogleMapsAPI = typeof google.maps;
@@ -27,8 +26,6 @@ export type IPolylineOptions = google.maps.PolylineOptions;
 export type IPolygonOptions = google.maps.PolygonOptions;
 export type IRectangleOptions = google.maps.RectangleOptions;
 export type ICircleOptions = google.maps.CircleOptions;
-
-export type ITheme = keyof typeof themes;
 
 export type AspectRatio = `${number}:${number}` | undefined;
 /**
@@ -74,3 +71,10 @@ export type ZoomLevel =
   | "18"
   | "19"
   | "20";
+
+export interface IEnvConfig extends Partial<LoaderOptions> {
+  apiKey: string;
+  libraries: LoaderOptions["libraries"];
+  language?: string;
+  region?: string;
+}

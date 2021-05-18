@@ -1,6 +1,20 @@
 export interface ImportMeta {
   env: {
-    VITE_GOOGLE_API_KEY: string;
+    VITE_MAP_API_KEY: string;
+    VUE_APP_MAP_API_KEY: string;
+
+    VITE_MAP_LIBRARIES: string;
+    VUE_APP_MAP_LIBRARIES: string;
+
+    VITE_MAP_LANGUAGE: string;
+    VUE_APP_MAP_LANGUAGE: string;
+
+    VITE_MAP_REGION: string;
+    VUE_APP_MAP_REGION: string;
+
+    VITE_MAP_;
+    VUE_APP_;
+
     DEV: boolean;
     MODE: "development" | "production";
     PROD: boolean;

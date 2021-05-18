@@ -1,5 +1,7 @@
 //#autoindex, exclude: shims-vue.d, composables, shared, themes, env.d
 
+import "./env";
+
 // #region autoindexed files
 
 // index last changed at: 5th May, 2021, 03:32 PM ( GMT-7 )

@@ -25,6 +25,7 @@ import { MAP_SYMBOL, API_SYMBOL, MAP_EVENTS } from "../shared/index";
 import { loadApi } from "./GoogleMap/loadApi";
 import { MapError } from "../errors";
 import { loadTheme } from "./GoogleMap/loadTheme";
+import { loadApiConfigFromEnv } from "./GoogleMap/loadApiConfigFromEnv";
 
 function computeHeight(w: string | undefined, ratio: AspectRatio) {
   if (ratio) {
@@ -139,6 +140,8 @@ export default defineComponent({
     const ready = ref(false);
     const map = ref<IMap | null>(null);
     const googleApi = ref<IGoogleMapsAPI | null>(null);
+
+    const envConfig = loadApiConfigFromEnv();
     /**
      * Assemble the Google API's configuration; leveraging
      * passed in explicit values as well as ENV variables
@@ -147,12 +150,12 @@ export default defineComponent({
     const apiConfig: LoaderOptions =
       typeof props.api === "string"
         ? {
-            apiKey: props.api || import.meta.env.VITE_GOOGLE_API_KEY,
-            libraries: [import.meta.env.VITE_GOOGLE_LIBRARIES || "places"],
+            ...envConfig,
+            apiKey: props.api || envConfig.apiKey,
           }
         : props.api
-        ? props.api
-        : { apiKey: import.meta.env.VITE_GOOGLE_API_KEY || "" };
+        ? { ...envConfig, ...props.api }
+        : envConfig;
 
     /**
      * The map config is reactive object which defines all the properties
@@ -195,8 +198,8 @@ export default defineComponent({
       });
       ready.value = true;
       watch(
-        [() => props.center, () => props.zoom, () => props.theme, () => props.tilt] as const,
-        ([center, zoom, theme, tilt], [oldCenter, oldZoom, oldTheme, oldTilt]) => {
+        [() => props.center, () => props.zoom, () => props.theme, () => props.tilt, () => props.config] as const,
+        ([center, zoom, theme, tilt, config], [oldCenter, oldZoom, oldTheme, oldTilt, oldConfig]) => {
           if (zoom !== undefined && zoom !== oldZoom) {
             map.value?.setZoom(zoom);
           }
@@ -213,6 +216,13 @@ export default defineComponent({
 
           if (map.value && tilt && tilt !== oldTilt) {
             map.value.setTilt(tilt);
+          }
+
+          if (map.value && config !== oldConfig) {
+            if (import.meta.env.DEV) {
+              console.log("Map config has changed");
+            }
+            map.value.setOptions(config);
           }
         }
       );

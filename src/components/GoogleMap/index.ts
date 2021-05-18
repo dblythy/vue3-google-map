@@ -1,24 +1,15 @@
-// #autoindex
+// #autoindex orphan
 
 // #region autoindexed files
 
-// index last changed at: 5th May, 2021, 05:06 PM ( GMT-7 )
+// index last changed at: 5th May, 2021, 04:46 PM ( GMT-7 )
 // export: named; exclusions: index, private.
-// files: Circle, Marker, Polygon, Polyline, Rectangle.
-// SFCs: CustomControl, GoogleMap.
+// files: loadApi, loadApiConfigFromEnv, loadTheme.
 
 // local file exports
-export * from "./Circle";
-export * from "./Marker";
-export * from "./Polygon";
-export * from "./Polyline";
-export * from "./Rectangle";
-
-// SFC components
-export { default as CustomControl } from "./CustomControl.vue";
-export { default as GoogleMap } from "./GoogleMap.vue";
-
-// there were directories orphaned: GoogleMap
+export * from "./loadApi";
+export * from "./loadApiConfigFromEnv";
+export * from "./loadTheme";
 
 // Note:
 // -----
