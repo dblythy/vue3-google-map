@@ -81,7 +81,7 @@ or from within a SFC:
 
 ### Core API
 
-Beyond just the `config` parameter, however, we identify core aspects of the API and make this available on the root of the component. Sometimes this just means us proxying properties through from the `config` but other times we may try to make improvements to the funtionality. Let's give two example of this using the `GoogleMap` component:
+Beyond just the `options` parameter, however, we identify core aspects of the API and make this available on the root of the component. Sometimes this just means us proxying properties through from the `options` but other times we may try to make improvements to the funtionality. Let's give two example of this using the `GoogleMap` component:
 
 #### Example 1: Zoom Level
 
