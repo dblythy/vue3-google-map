@@ -47,10 +47,47 @@ To use a default theme simply pass the theme's name to the `theme` prop of the `
 ```
 
 
-## Custom Styles
+## Custom Themes
 
-::: warning
-Please be aware that if you specify a default theme that it will overrride any custom styles you define.
-:::
+You can load your own custom themes in two distinct ways:
 
-Alternatively you can define your own styles by passing them to the `styles` prop of the `GoogleMap` component. Please refer to the [Google Maps documentation](https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions.styles) on custom styles.
+1. **Inline**
+
+    If you defined a style in your code, you can simply pass in an array of `IMapTypeStyle` definitions. An example might be:
+
+    ```vue
+    <template>
+        <GoogleMap :theme="myTheme" />
+    </template>
+    <script>
+        import { defineComponent } from 'vue'
+        import { GoogleMap, IMapTypeStyle } from 'vue3-google-map'
+
+        export default defineComponent({
+        components: { GoogleMap },
+        setup() {
+            const myTheme: IMapTypeStyle = [
+                {
+                    featureType: "water",
+                    elementType: "labels.text.fill",
+                    stylers: [ { color: "#4e6d70" } ]
+                }
+            ];
+            return { myTheme }
+        },
+    })
+    </script>
+    ```
+
+    > This style -- while available -- is largely a mirror of just setting the `config.styles` property.
+
+2. **Network Loading**
+
+    If you want you can also just state a URL path to a JSON file which defines a style. An example of this would be:
+
+    ```html
+    <GoogleMap theme="https://mysite.com/theme/light.json" />
+    ```
+
+
+
