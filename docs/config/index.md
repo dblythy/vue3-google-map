@@ -50,28 +50,28 @@ Finally, if you set ENV variables this will serve as a baseline configuration an
 
 At the root, every use of this repo starts with `GoogleMap` but within the _slot scope_ of this component you can use any number of the other components covered in the [components](../components/index.md) section. While each component has it's specific focus and therefore different API surface, we take a structurally similar philosophy toward how to present the API surface of each of these.
 
-### The `config` Parameter
+### The `options` Parameter
 
-Each of the components exposes a `config` parameter which exposes _all_ of the options which the underlying Google API provides. This parameter is strongly typed and you can change it during runtime and expect for it to be reactive.
+Each of the components exposes a `options` parameter which exposes _all_ of the options which the underlying Google API provides. This parameter is strongly typed and you can change it during runtime and expect for it to be reactive.
 
 As a _for instance_, the `GoogleMap` component exposes the `IMap` API surface on the `config` property it exposes and it allows you to state things like:
 
 ```html
-<GoogleMap :config="{ zoom: 5, rotateControl: true }" />
+<GoogleMap :options="{ zoom: 5, rotateControl: true }" />
 ```
 
 or from within a SFC:
 
 ```vue
 <template>
-  <GoogleMap :config="{ zoom: 5, rotateControl: true }" />
+  <GoogleMap :options="options" />
 </template>
 <script lang="ts">
     export default defineComponent({
         import { GoogleMap, IMapOptions } from "vue3-google-map";
         setup() {
-            const config: IMapOptions = { zoom: 5, rotateControl: true }; 
-            return { config };
+            const options: IMapOptions = { zoom: 5, rotateControl: true }; 
+            return { options };
         }
     });
 </script>
@@ -85,16 +85,16 @@ Beyond just the `config` parameter, however, we identify core aspects of the API
 
 #### Example 1: Zoom Level
 
-In the previous `config` example we showed how you can state the `zoom` property as a property on _config_. You can do this but setting the zoom level is a very common operation and so this has been pulled out to be part of the core API. This means that you can simply state the following:
+In the previous `options` example we showed how you can state the `zoom` property as a property on _options_. You can do this but setting the zoom level is a very common operation and so this has been pulled out to be part of the core API. This means that you can simply state the following:
 
 ```html
 <GoogleMap zoom="5" />
 ```
 
-Doing this doesn't in any way prevent you from later doing it as part of the config object but the core API will always take precedence over the general config hash. Now are the two `zoom` configurations exactly the same? Very close but with the core API we allow you to state both a _number_ (which is what `config.zoom` is typed to) or a string representation of a number. Small change but it makes for using a static value like the example above that much easier.
+Doing this doesn't in any way prevent you from later doing it as part of the options object but the core API will always take precedence over the general options hash. Now are the two `zoom` configurations exactly the same? Very close but with the core API we allow you to state both a _number_ (which is what `options.zoom` is typed to) or a string representation of a number. Small change but it makes for using a static value like the example above that much easier.
 
 #### Example #2: Themes
-In the `config` parameter you can set a property called `styles` and this will effect the way that your map is displayed. From a _typing_ standpoint this property is an array of `IMapTypeStyle` elements. You can therefore style your map with just this **config.styles** setting but we expose a core property called `theme` which is covered in greater detail in the [themes](../themes/index.md) section but in short it allows for you to more compactly style your map with either built-in styles or your own:
+In the `options` parameter you can set a property called `styles` and this will effect the way that your map is displayed. From a _typing_ standpoint this property is an array of `IMapTypeStyle` elements. You can therefore style your map with just this **config.styles** setting but we expose a core property called `theme` which is covered in greater detail in the [themes](../themes/index.md) section but in short it allows for you to more compactly style your map with either built-in styles or your own:
 
 ```html
 <!-- using a built-in style -->

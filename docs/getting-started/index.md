@@ -39,7 +39,7 @@ export default defineComponent({
   components: { GoogleMap, Marker },
   setup() {
     /** make sure you provide your API key to the component **/
-    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+    const apiKey = "my-secret-key;
     /** center the marker in the middle of the map */
     const marker = { center: { lat: 40.689247, lng: -74.044502 }};
 
@@ -69,7 +69,10 @@ Below you will see how this code translates into an actual map but let's review 
 
 2. The only **required** parameter to a `GoogleMap` component is the API key
    
-    > You _could_ use this component without it but unfortunately Google wants your credit card details so you'll get the ugly warning message you're seeing below in the our example (yes, we're too cheap to add a key). 
+    > You _could_ use this component without it but unfortunately Google wants your credit card details so you'll get the ugly warning message you're seeing below in the our example (yes, we're too cheap to add a key).
+
+    > In our example we're just hard coded a key in here but this is clearly not a good idea and in the [config](../config/index.md) section we'll go over better ways of providing this info.
+    
     > Note: you will need an API key but you will also need to make sure you've enabled the API for [billing](https://console.cloud.google.com/project/_/billing/enable).
 
 3. In the **Marker** you see us using the _options_ parameter to set the location of the marker.

@@ -2,7 +2,6 @@ import theme from "vitepress/dist/client/theme-default";
 import * as libraryComponents from "/@src/components/index";
 import * as examples from "/@docs/examples/index";
 import { h } from "vue";
-// import { config } from "dotenv";
 
 export default {
   ...theme,
@@ -17,7 +16,7 @@ export default {
     app.component("GoogleMap", {
       render() {
         // @ts-ignore
-        return h(GoogleMap, { api: import.meta.env.VITE_GOOGLE_API_KEY }, this.$slots.default);
+        return h(GoogleMap, {}, this.$slots.default);
       },
     });
 
@@ -29,7 +28,7 @@ export default {
       app.component(key, {
         render() {
           // @ts-ignore
-          return h(examples[key], { api: import.meta.env.VITE_GOOGLE_API_KEY });
+          return h(examples[key], {});
         },
       });
     }
